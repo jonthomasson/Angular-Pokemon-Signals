@@ -1,0 +1,23 @@
+<div class="card"
+     *ngIf="pokemon()">
+  <div class="card-body">
+    <h5 class="card-title">Name: {{ pokemon()?.name }}</h5>
+    <p class="card-text">
+      <strong>Height:</strong>  {{ pokemon()?.height }} m <br>
+      <strong>Weight:</strong>  {{ pokemon()?.weight }} kg
+    </p>
+    <div>
+      <strong>Abilities:</strong>
+      <ul>
+        <li *ngFor="let ability of pokemon()?.abilities">{{ ability.ability.name }}</li>
+      </ul>
+    </div>
+    <div>
+      <strong>Held Items:</strong>
+      <ul>
+        <li *ngFor="let item of pokemon()?.held_items">{{ item.item.name }}</li>
+
+      </ul>
+    </div>
+  </div>
+</div>

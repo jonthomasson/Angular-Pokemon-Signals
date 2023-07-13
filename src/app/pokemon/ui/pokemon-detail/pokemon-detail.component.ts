@@ -15,4 +15,12 @@ export class PokemonDetailComponent {
   moves = computed(() => this.pokemon()?.moves.slice(0, 10));
 
   constructor(private pokemonService: PokemonService) { }
+
+  isFavorited(id: number) {
+    return true;
+  }
+
+  toggleFavorite(id: number): void {
+    // add the Pokemon with the given ID to the favorites if it's not there yet, remove it otherwise
+  }
 }

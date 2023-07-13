@@ -11,19 +11,10 @@ import { PokemonService } from '../../data-access/pokemon.service';
 })
 export class PokemonListComponent {
   errorMessage = '';
-
+  pokemons = this.pokemonService.pokemons;
  
 
   constructor(private pokemonService: PokemonService) { }
-
-  pokemons = computed(() => {
-    try {
-      return this.pokemonService.pokemons();
-    } catch (e) {
-      this.errorMessage = typeof e === 'string' ? e : 'Error';
-      return [];
-    }
-  });
 
   onSelected(pokemonUrl: string): void {
     let urlParts = pokemonUrl.split('/');

@@ -1,7 +1,13 @@
 <div class="card"
      *ngIf="pokemon()">
   <div class="card-body">
-    <h5 class="card-title">Name: {{ pokemon()?.name }}</h5>
+    <div class="card-header">
+      <i class="bi bi-heart-fill favorite-button"
+         [class.favorited]="isFavorited(0)"
+         (click)="toggleFavorite(0)">
+      </i>
+      <h5 class="card-title">Name: {{ pokemon()?.name }}</h5>
+    </div>
     <p class="card-text">
       <strong>Height:</strong>  {{ pokemon()?.height }} m <br>
       <strong>Weight:</strong>  {{ pokemon()?.weight }} kg

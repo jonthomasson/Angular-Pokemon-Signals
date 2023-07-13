@@ -40,8 +40,18 @@ export class PokemonService {
   }
 
   async pokemonFavorited(pokemon: Pokemon) {
-    this.favoritePokemons.mutate(favorites => favorites.push(pokemon));
-    console.log(this.favoritePokemons().length);
+    //toggle favorite. If pokemon found in favorites, remove it else add it to favorites.
+    const found = this.favoritePokemons().some((p) => p.id == pokemon.id);
+
+    if (found) {
+      //use update to update the object value in the signal.
+      this.favoritePokemons.update(p => p.filter(p =>
+        p.id !== pokemon.id));
+    } else {
+      //use mutate to change the object properties within the signal.
+      this.favoritePokemons.mutate(favorites => favorites.push(pokemon));
+    }
+    //console.log(this.favoritePokemons().length);
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {

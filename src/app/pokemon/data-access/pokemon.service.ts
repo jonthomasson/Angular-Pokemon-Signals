@@ -24,17 +24,35 @@ export class PokemonService {
   //expose observables as private
   private pokemon$ = this.http.get<PokemonResponse>(this.apiBase).pipe(
     map((data) => data.results),
+    shareReplay(1),
     catchError(this.handleError)
   );
 
   //expose our signals
   pokemons = toSignal(this.pokemon$, { initialValue: [] as PokemonResult[] });
   selectedPokemon = signal<Pokemon | undefined>(undefined);
+  favoritePokemons = signal<Pokemon[]>([]);
 
   async pokemonSelected(id: number) {
       const selected = await this.http.get<Pokemon>(`${this.apiBase}/${id}`).toPromise();
     this.selectedPokemon.set(selected);
-    console.log(this.selectedPokemon());
+    //console.log(this.selectedPokemon());
+  }
+
+  isFavorite(pokemon: Pokemon): boolean {
+    const foundFavorite = this.favoritePokemons().find((p) => p == pokemon)
+
+    if (foundFavorite) {
+      console.log('found');
+      return true;
+    }
+    console.log('not found');
+    return false;
+  }
+
+  async pokemonFavorited(pokemon: Pokemon) {
+    this.favoritePokemons.mutate(favorites => favorites.push(pokemon));
+    console.log(this.favoritePokemons().length);
   }
 
   private handleError(err: HttpErrorResponse): Observable<never> {

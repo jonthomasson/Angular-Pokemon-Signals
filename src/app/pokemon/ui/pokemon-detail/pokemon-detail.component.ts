@@ -12,15 +12,16 @@ import { PokemonMove } from '../../interfaces/pokemon';
 })
 export class PokemonDetailComponent {
   pokemon = this.pokemonService.selectedPokemon;
+  favoritePokemons = this.pokemonService.favoritePokemons;
   moves = computed(() => this.pokemon()?.moves.slice(0, 10));
+  favorited = computed<boolean>(() => this.favoritePokemons().some((p) => p.id === this.pokemon()?.id));
 
   constructor(private pokemonService: PokemonService) { }
 
-  isFavorited(id: number) {
-    return true;
-  }
-
-  toggleFavorite(id: number): void {
-    // add the Pokemon with the given ID to the favorites if it's not there yet, remove it otherwise
+  toggleFavorite(): void {
+    const selectedPokemon = this.pokemon();
+    if (selectedPokemon) {
+      this.pokemonService.pokemonFavorited(selectedPokemon);
+    }
   }
 }

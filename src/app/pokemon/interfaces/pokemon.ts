@@ -12,8 +12,8 @@ export interface Pokemon {
   weight: string;
   abilities: PokemonAbility[];
   held_items: PokemonHeldItem[];
-  moves: PokemonResult[];
-  type: PokemonResult[];
+  moves: PokemonMove[];
+  type: PokemonType[];
 }
 
 
@@ -25,6 +25,14 @@ export interface PokemonAbility {
 
 export interface PokemonHeldItem {
   item: PokemonResult;
+}
+
+export interface PokemonMove {
+  move: PokemonResult;
+}
+
+export interface PokemonType {
+  type: PokemonResult;
 }
 
 export interface PokemonResult {

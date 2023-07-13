@@ -16,6 +16,12 @@
       <strong>Held Items:</strong>
       <ul>
         <li *ngFor="let item of pokemon()?.held_items">{{ item.item.name }}</li>
+      </ul>
+    </div>
+    <div>
+      <strong>Moves:</strong>
+      <ul>
+        <li *ngFor="let move of moves()">{{ move.move.name }}</li>
 
       </ul>
     </div>

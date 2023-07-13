@@ -39,17 +39,6 @@ export class PokemonService {
     //console.log(this.selectedPokemon());
   }
 
-  isFavorite(pokemon: Pokemon): boolean {
-    const foundFavorite = this.favoritePokemons().find((p) => p == pokemon)
-
-    if (foundFavorite) {
-      console.log('found');
-      return true;
-    }
-    console.log('not found');
-    return false;
-  }
-
   async pokemonFavorited(pokemon: Pokemon) {
     this.favoritePokemons.mutate(favorites => favorites.push(pokemon));
     console.log(this.favoritePokemons().length);

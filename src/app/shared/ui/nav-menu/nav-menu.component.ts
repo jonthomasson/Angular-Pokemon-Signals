@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./nav-menu.component.scss']
 })
 export class NavMenuComponent {
-  favoriteCount = computed(() => this.pokemonService.favoritePokemons().length);
+  favoriteCount = computed<number>(() => this.pokemonService.favoritePokemons().length);
 
   
   constructor(private pokemonService: PokemonService) { }

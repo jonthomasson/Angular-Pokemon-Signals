@@ -1,20 +1,25 @@
 <div class="container">
   <h1>Favorite Pokemons</h1>
-  <table class="table" *ngIf="favoritePokemons().length; else noFavorites">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Height</th>
-        <th scope="col">Weight</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pokemon of favoritePokemons()">
-        <td>{{pokemon.name}}</td>
-        <td>{{pokemon.height}}</td>
-        <td>{{pokemon.weight}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <ng-template #noFavorites>You don't have any favorites!</ng-template>
+  @if (favoritePokemons().length) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Height</th>
+          <th scope="col">Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pokemon of favoritePokemons(); track pokemon) {
+          <tr>
+            <td>{{pokemon.name}}</td>
+            <td>{{pokemon.height}}</td>
+            <td>{{pokemon.weight}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    You don't have any favorites!
+  }
 </div>

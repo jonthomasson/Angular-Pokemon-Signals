@@ -6,7 +6,9 @@
         <a class="nav-link" routerLink="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/favorites">Favorite Pokemon <span *ngIf="favoriteCount()" class="badge bg-primary">{{favoriteCount()}}</span></a>
+        <a class="nav-link" routerLink="/favorites">Favorite Pokemon @if (favoriteCount()) {
+          <span class="badge bg-primary">{{favoriteCount()}}</span>
+        }</a>
       </li>
     </ul>
   </div>

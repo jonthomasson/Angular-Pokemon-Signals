@@ -1,39 +1,43 @@
 @if(pokemon()){
-<div class="card">
-  <div class="card-body">
-    <div class="card-header">
-      <i class="bi bi-heart-fill favorite-button"
-         [class.favorited]="favorited()"
-         (click)="toggleFavorite()">
-      </i>
-      <h5 class="card-title">Name: {{ pokemon()?.name }}</h5>
-    </div>
-    <p class="card-text">
-      <strong>Height:</strong>  {{ pokemon()?.height }} m <br>
-      <strong>Weight:</strong>  {{ pokemon()?.weight }} kg
-    </p>
-    <div>
-      <strong>Abilities:</strong>
-      <ul>
-        @for(ability of pokemon()?.abilities; track ability.ability.name){
-        <li >{{ ability.ability.name }}</li>
-        }
-      </ul>
-    </div>
-    <div>
-      <strong>Held Items:</strong>
-      <ul>
-        <li *ngFor="let item of pokemon()?.held_items">{{ item.item.name }}</li>
-      </ul>
-    </div>
-    <div>
-      <strong>Moves:</strong>
-      <ul>
-        <li *ngFor="let move of moves()">{{ move.move.name }}</li>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header">
+        <i class="bi bi-heart-fill favorite-button"
+          [class.favorited]="favorited()"
+          (click)="toggleFavorite()">
+        </i>
+        <h5 class="card-title">Name: {{ pokemon()?.name }}</h5>
+      </div>
+      <p class="card-text">
+        <strong>Height:</strong>  {{ pokemon()?.height }} m <br>
+        <strong>Weight:</strong>  {{ pokemon()?.weight }} kg
+      </p>
+      <div>
+        <strong>Abilities:</strong>
+        <ul>
+          @for(ability of pokemon()?.abilities; track ability.ability.name){
+            <li >{{ ability.ability.name }}</li>
+          }
+        </ul>
+      </div>
+      <div>
+        <strong>Held Items:</strong>
+        <ul>
+          @for (item of pokemon()?.held_items; track item) {
+            <li>{{ item.item.name }}</li>
+          }
+        </ul>
+      </div>
+      <div>
+        <strong>Moves:</strong>
+        <ul>
+          @for (move of moves(); track move) {
+            <li>{{ move.move.name }}</li>
+          }
 
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 }
 

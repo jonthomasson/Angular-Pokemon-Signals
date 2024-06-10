@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PokemonService } from '../../data-access/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-favorites',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './pokemon-favorites.component.html',
   styleUrls: ['./pokemon-favorites.component.scss']
 })

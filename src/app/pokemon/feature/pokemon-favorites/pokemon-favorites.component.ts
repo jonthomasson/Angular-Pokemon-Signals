@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { PokemonService } from '../../data-access/pokemon.service';
+import { PokemonHeavyComponent } from '../../ui/pokemon-heavy/pokemon-heavy.component';
 
 @Component({
   selector: 'app-pokemon-favorites',
   standalone: true,
-  imports: [],
+  imports: [PokemonHeavyComponent],
   templateUrl: './pokemon-favorites.component.html',
   styleUrls: ['./pokemon-favorites.component.scss']
 })

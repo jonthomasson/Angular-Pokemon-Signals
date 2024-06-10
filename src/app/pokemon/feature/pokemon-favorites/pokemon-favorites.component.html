@@ -1,25 +1,34 @@
 <div class="container">
   <h1>Favorite Pokemons</h1>
   @if (favoritePokemons().length) {
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Height</th>
-          <th scope="col">Weight</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (pokemon of favoritePokemons(); track pokemon) {
-          <tr>
-            <td>{{pokemon.name}}</td>
-            <td>{{pokemon.height}}</td>
-            <td>{{pokemon.weight}}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Height</th>
+        <th scope="col">Weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (pokemon of favoritePokemons(); track pokemon) {
+      <tr>
+        <td>{{pokemon.name}}</td>
+        <td>{{pokemon.height}}</td>
+        <td>{{pokemon.weight}}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  @defer(on viewport){
+  <app-pokemon-heavy ></app-pokemon-heavy>
+  }@placeholder (minimum 5s) {
+  <p>Placeholder content</p>
+  }
+
+
+
   } @else {
-    You don't have any favorites!
+  You don't have any favorites!
   }
 </div>

@@ -1,5 +1,5 @@
-<div class="card"
-     *ngIf="pokemon()">
+@if(pokemon()){
+<div class="card">
   <div class="card-body">
     <div class="card-header">
       <i class="bi bi-heart-fill favorite-button"
@@ -15,7 +15,9 @@
     <div>
       <strong>Abilities:</strong>
       <ul>
-        <li *ngFor="let ability of pokemon()?.abilities">{{ ability.ability.name }}</li>
+        @for(ability of pokemon()?.abilities; track ability.ability.name){
+        <li >{{ ability.ability.name }}</li>
+        }
       </ul>
     </div>
     <div>
@@ -33,3 +35,5 @@
     </div>
   </div>
 </div>
+}
+

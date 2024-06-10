@@ -48,8 +48,9 @@ export class PokemonService {
       this.favoritePokemons.update(p => p.filter(p =>
         p.id !== pokemon.id));
     } else {
-      //use mutate to change the object properties within the signal.
-      this.favoritePokemons.mutate(favorites => favorites.push(pokemon));
+      this.favoritePokemons.update(p => [...p, pokemon]); //updating for v17.
+      ////use mutate to change the object properties within the signal.
+      //this.favoritePokemons.mutate(favorites => favorites.push(pokemon)); //mutate was taken out of v17!
     }
     //console.log(this.favoritePokemons().length);
   }

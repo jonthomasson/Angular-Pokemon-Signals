@@ -1,11 +1,11 @@
 import { Component, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PokemonService } from '../../data-access/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss']
 })
@@ -22,5 +22,6 @@ export class PokemonListComponent {
 
     const id = urlParts[urlParts.length - 1];
     this.pokemonService.pokemonSelected(Number(id));
+    this.errorMessage = 'an error occurred!';
   }
 }

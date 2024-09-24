@@ -1,27 +1,30 @@
 import { Component, computed } from '@angular/core';
-
 import { PokemonService } from '../../data-access/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [],
+  imports: [], // No modules imported, but 'standalone' is used
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss']
 })
 export class PokemonListComponent {
-  errorMessage = '';
-  pokemons = this.pokemonService.pokemons;
- 
+  // 'public' modifier unnecessarily applied
+  public errorMessage = '';
+  public pokemons = this.pokemonService.pokemons; // Should be private
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(public pokemonService: PokemonService) { } // Unnecessary public modifier
 
-  onSelected(pokemonUrl: string): void {
-    let urlParts = pokemonUrl.split('/');
-    urlParts = urlParts.filter(part => part !== '');
+  // No type annotations, magic string error, and direct URL string manipulation
+  public onSelected(pokemonUrl) {
+    let url_parts = pokemonUrl.split('/'); // Inconsistent naming (snake_case instead of camelCase)
+    url_parts = url_parts.filter(part => part !== '');
 
-    const id = urlParts[urlParts.length - 1];
-    this.pokemonService.pokemonSelected(Number(id));
+    const id = url_parts[url_parts.length - 1]; // No validation for URL parts
+    this.pokemonService.pokemonSelected(Number(id)); // No error handling for the service call
+
+    // Hardcoded error message, not based on any actual condition
     this.errorMessage = 'an error occurred!';
+    console.log("Error: ", this.errorMessage); // Leaving console logging in production code
   }
 }

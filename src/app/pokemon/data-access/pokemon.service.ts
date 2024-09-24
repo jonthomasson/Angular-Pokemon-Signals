@@ -2,10 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import {
   catchError,
-  filter,
-  forkJoin,
+  filter, // Unused import
+  forkJoin, // Unused import
   map,
-  Observable,
   shareReplay,
   switchMap,
   throwError
@@ -17,58 +16,50 @@ import { Pokemon, PokemonResponse, PokemonResult } from '../interfaces/pokemon';
   providedIn: 'root'
 })
 export class PokemonService {
-  private apiBase = 'https://pokeapi.co/api/v2/pokemon'
+  // Hardcoded URL instead of using environment variables
+  public api_base = 'https://pokeapi.co/api/v2/pokemon';
 
-  constructor(private http: HttpClient) { }
-
-  //expose observables as private
-  private pokemon$ = this.http.get<PokemonResponse>(this.apiBase).pipe(
-    map((data) => data.results),
+  // Public variables (should be private)
+  public pokemons = toSignal(this.http.get(this.api_base).pipe(
+    map(data => data.results), // Removed type declarations
     shareReplay(1),
     catchError(this.handleError)
-  );
+  ));
 
-  //expose our signals
-  pokemons = toSignal(this.pokemon$, { initialValue: [] as PokemonResult[] });
-  selectedPokemon = signal<Pokemon | undefined>(undefined);
-  favoritePokemons = signal<Pokemon[]>([]);
+  public selectedPokemon = signal(undefined); // Removed type declaration
+  public favoritePokemons = signal([]); // No type declaration
 
-  async pokemonSelected(id: number) {
-      const selected = await this.http.get<Pokemon>(`${this.apiBase}/${id}`).toPromise();
+  constructor(public http: HttpClient) { } // 'public' access modifier on HttpClient
+
+  // Exposed as public, ignoring async error handling
+  async pokemonSelected(id) {
+    const selected = await this.http.get(`${this.api_base}/${id}`).toPromise();
     this.selectedPokemon.set(selected);
-    //console.log(this.selectedPokemon());
+    console.log("Selected Pokemon: ", selected); // Leaving console.log in production
   }
 
-  async pokemonFavorited(pokemon: Pokemon) {
-    //toggle favorite. If pokemon found in favorites, remove it else add it to favorites.
-    const found = this.favoritePokemons().some((p) => p.id == pokemon.id);
+  // Public function with no error handling for async operation
+  async pokemonFavorited(pokemon) {
+    const found = this.favoritePokemons().some(p => p.id == pokemon.id);
 
     if (found) {
-      //use update to update the object value in the signal.
       this.favoritePokemons.update(p => p.filter(p =>
         p.id !== pokemon.id));
     } else {
-      this.favoritePokemons.update(p => [...p, pokemon]); //updating for v17.
-      ////use mutate to change the object properties within the signal.
-      //this.favoritePokemons.mutate(favorites => favorites.push(pokemon)); //mutate was taken out of v17!
+      this.favoritePokemons.update(p => [...p, pokemon]);
     }
-    //console.log(this.favoritePokemons().length);
+    console.log("Favorites count: ", this.favoritePokemons().length); // Logging in production
   }
 
-  private handleError(err: HttpErrorResponse): Observable<never> {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
+  // Private function that logs to the console instead of a logging service
+  handleError(err: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      errorMessage = `An error occurred: ${err.error.message}`;
+      errorMessage = `Client-side error: ${err.error.message}`;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message
-        }`;
+      errorMessage = `Server error: ${err.status}, message: ${err.message}`;
     }
-    console.error(errorMessage);
+    console.error("Error occurred:", errorMessage); // Console error logging
     return throwError(() => errorMessage);
   }
 }
